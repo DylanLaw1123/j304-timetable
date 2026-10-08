@@ -230,6 +230,12 @@ function beep(){
     });
   }catch(e){}
 }
+function msgFor(di,p,n){
+  const pn=p.t==="c"?itemName(di,p):p.name;
+  if(!n)return ["放学啦",`${pn}结束了，放学啦！${di===4?"周末愉快～":"明天见～"}`];
+  const nn=(n.t==="c"?itemName(di,n):n.name)+`，${fmtT(n.s)}–${fmtT(n.e)}`;
+  return [p.t==="b"?"上课啦":(n.t==="b"?"下课啦":"换节啦"),`${pn}结束了，接下来是${nn}`];
+}
 function notify(title,body){
   toast(title,body);beep();
   try{navigator.vibrate&&navigator.vibrate([200,100,200]);}catch(e){}
@@ -262,7 +268,14 @@ document.getElementById("btnTest").onclick=async()=>{
   const has="Notification" in window;
   if(has&&Notification.permission==="default"){try{await Notification.requestPermission();}catch(e){}}
   beep();
-  notify("下课啦","第3节 国文结束了，接下来是第一个下课，08:50–09:10");
+  {
+    const nw=now(), d0=nw.di>=0?nw.di:0, list=items(d0);
+    let k=list.findIndex(x=>nw.m>=x.s&&nw.m<x.e);
+    if(k<0)k=list.findIndex(x=>x.s>nw.m);
+    if(k<0)k=list.length-1;
+    const [t,m2]=msgFor(d0,list[k],list[k+1]||null);
+    notify("测试："+t,(nw.di<0?"（今天休息，用星期一举例）":"")+m2);
+  }
   let tip="";
   if(location.protocol==="file:")tip="现在是本地文件打开的，系统通知不会生效。请用 https://用户名.github.io/... 的网址打开。";
   else if(!has)tip="这个浏览器不支持系统通知，只会有页面弹窗和提示音。";
@@ -300,14 +313,7 @@ function tick(){
   // 状态切换提醒
   const ck=di<0?"off":(cu?di+":"+cu.t+":"+(cu.t==="c"?cu.i:cu.k):(sec<first?"pre":"post"));
   if(notifyOn&&prev.key!==null&&ck!==prev.key&&prev.it&&prev.di===di&&sec-prev.it.e*60>=0&&sec-prev.it.e*60<180){
-    const pn=prev.it.t==="c"?itemName(di,prev.it):prev.it.name;
-    if(cu){
-      const nn=(cu.t==="c"?itemName(di,cu):cu.name)+`，${fmtT(cu.s)}–${fmtT(cu.e)}`;
-      const title=prev.it.t==="b"?"上课啦":(cu.t==="b"?"下课啦":"换节啦");
-      notify(title,`${pn}结束了，接下来是${nn}`);
-    }else if(ck==="post"){
-      notify("放学啦",`${pn}结束了，放学啦！${di===4?"周末愉快～":"明天见～"}`);
-    }
+    if(cu||ck==="post"){const [t,m2]=msgFor(di,prev.it,cu);notify(t,m2);}
   }
   prev={key:ck,it:cu,di};
   const key=di+"-"+cur;
