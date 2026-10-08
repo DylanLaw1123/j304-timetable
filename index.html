@@ -233,8 +233,20 @@ function beep(){
 function notify(title,body){
   toast(title,body);beep();
   try{navigator.vibrate&&navigator.vibrate([200,100,200]);}catch(e){}
-  try{if("Notification" in window&&Notification.permission==="granted")new Notification(title,{body,tag:"timetable"});}catch(e){}
+  showSys(title,body);
 }
+// 系统通知：优先走 Service Worker，这样切到其他标签页也能弹出
+async function showSys(title,body){
+  if(!("Notification" in window)||Notification.permission!=="granted")return;
+  try{
+    if("serviceWorker" in navigator){
+      const reg=await navigator.serviceWorker.getRegistration();
+      if(reg){await reg.showNotification(title,{body,tag:"timetable",renotify:true,vibrate:[200,100,200]});return;}
+    }
+  }catch(e){}
+  try{new Notification(title,{body,tag:"timetable"});}catch(e){}
+}
+try{if("serviceWorker" in navigator)navigator.serviceWorker.register("sw.js").catch(()=>{});}catch(e){}
 btnNotify.onclick=async()=>{
   notifyOn=!notifyOn;
   try{localStorage.setItem("tt-notify",notifyOn?"1":"0")}catch(e){}
@@ -279,7 +291,7 @@ function tick(){
   cur_.textContent=cur;curSub_.textContent=curSub;nxt_.textContent=nxt;nxtSub_.textContent=nxtSub;
   // 状态切换提醒
   const ck=di<0?"off":(cu?di+":"+cu.t+":"+(cu.t==="c"?cu.i:cu.k):(sec<first?"pre":"post"));
-  if(notifyOn&&prev.key!==null&&ck!==prev.key&&prev.it&&prev.di===di&&sec-prev.it.e*60>=0&&sec-prev.it.e*60<120){
+  if(notifyOn&&prev.key!==null&&ck!==prev.key&&prev.it&&prev.di===di&&sec-prev.it.e*60>=0&&sec-prev.it.e*60<180){
     const pn=prev.it.t==="c"?itemName(di,prev.it):prev.it.name;
     if(cu){
       const nn=(cu.t==="c"?itemName(di,cu):cu.name)+`，${fmtT(cu.s)}–${fmtT(cu.e)}`;
@@ -295,7 +307,15 @@ function tick(){
 }
 const cur_=document.getElementById("cur"),curSub_=document.getElementById("curSub"),
       nxt_=document.getElementById("nxt"),nxtSub_=document.getElementById("nxtSub");
-render(); tick(); setInterval(tick,1000);
+// 用 Web Worker 计时：切到别的标签页时不会被浏览器降频，通知更准时
+function startClock(){
+  try{
+    const w=new Worker(URL.createObjectURL(new Blob(["setInterval(()=>postMessage(1),1000)"],{type:"text/javascript"})));
+    w.onmessage=tick;
+  }catch(e){setInterval(tick,1000);}
+  if(document.addEventListener)document.addEventListener("visibilitychange",()=>{if(!document.hidden)tick()});
+}
+render(); tick(); startClock();
 </script>
 </body>
 </html>
