@@ -4,22 +4,28 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>初三4 课程表</title>
+<script>
+(function(){var t=null;try{t=localStorage.getItem("tt-theme")}catch(e){}
+if(t!=="dark"&&t!=="light")t=window.matchMedia&&matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light";
+document.documentElement.setAttribute("data-theme",t);})();
+</script>
 <style>
 :root{
+  color-scheme:light;
   --bg:#f3f6f4; --card:#ffffff; --ink:#1d2b2a; --muted:#6a7b79; --line:#d9e2df; --now:#0f766e;
   --华文:#fde2e0; --英文:#dbeafe; --数学:#fef3c7; --科学:#d9f2e3; --国文:#ede4fb;
   --地理:#ffe8d1; --历史:#f1e3d3; --联课活动:#cdf1f5; --other:#eceff0;
 }
-@media (prefers-color-scheme:dark){
-  :root{--bg:#121816; --card:#1b2421; --ink:#e7efed; --muted:#93a5a2; --line:#2c3935; --now:#2dd4bf;
+:root[data-theme="dark"]{color-scheme:dark;--bg:#121816; --card:#1b2421; --ink:#e7efed; --muted:#93a5a2; --line:#2c3935; --now:#2dd4bf;
   --华文:#4a2a2a; --英文:#22344f; --数学:#4a3d17; --科学:#1f4030; --国文:#3a2e55; --地理:#4a3220; --历史:#3e3126; --联课活动:#164650; --other:#27312e;}
-}
 *{box-sizing:border-box}
 html,body{margin:0}
 body{font-family:"PingFang SC","Microsoft YaHei","Noto Sans SC",system-ui,sans-serif;background:var(--bg);color:var(--ink);
   padding:calc(16px + env(safe-area-inset-top,0px)) 16px calc(24px + env(safe-area-inset-bottom,0px));line-height:1.4}
 .wrap{max-width:1100px;margin:0 auto}
-header{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:6px 24px;margin-bottom:14px}
+header{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:14px}
+#btnTheme{flex:none;font:inherit;font-size:.9rem;padding:7px 12px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:8px;cursor:pointer;white-space:nowrap}
+#btnTheme:focus-visible{outline:2px solid var(--now);outline-offset:2px}
 h1{font-size:1.6rem;margin:0}
 .meta{color:var(--muted);font-size:.9rem}
 .tools{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:14px}
@@ -61,6 +67,8 @@ tr.today th{color:var(--now);box-shadow:inset 3px 0 0 var(--now)}
 td.now{outline:3px solid var(--now);outline-offset:-3px}
 th.nowcol{color:var(--now)}
 .day{display:none}
+footer{margin-top:20px;padding-top:14px;border-top:1px solid var(--line);text-align:center;color:var(--muted);font-size:.85rem;line-height:1.7}
+footer a{color:var(--now)}
 .note{color:var(--muted);font-size:.8rem;margin-top:12px}
 @media (max-width:640px){
   .scroll{display:none}
@@ -80,8 +88,9 @@ th.nowcol{color:var(--now)}
 <div id="toast" role="status" aria-live="polite"></div>
 <div class="wrap">
   <header>
-    <h1>初三4 课程表</h1>
-    <div class="meta">班主任：张晓甜（zxt）　生效日期：2026年1月12日</div>
+    <div class="title"><h1>初三4 课程表</h1>
+    <div class="meta">班主任：张晓甜（zxt）　生效日期：2026年1月12日</div></div>
+    <button id="btnTheme" aria-label="切换黑白主题">🌙 黑色主题</button>
   </header>
 
   <div class="panel">
@@ -103,6 +112,10 @@ th.nowcol{color:var(--now)}
   <div class="daybox day" id="dayView"></div>
 
   <p class="note">美术(单) / 辅导(双)：第1、2节为单双周轮换。星期五第7节后 13:25–13:40 下课，13:40–15:40 为联课活动。数据按课表照片录入，如有出入请以学校为准。</p>
+  <footer>
+    <div>2026 初三4班 | Made By DylanLaw and ClaudeAI.</div>
+    <div>有任何问题可以 Email：<a href="mailto:242187law@fyk.edu.my">242187law@fyk.edu.my</a></div>
+  </footer>
 </div>
 
 <script>
@@ -205,6 +218,17 @@ function setBtn(){
   document.getElementById("btnToday").setAttribute("aria-pressed",mode==="today");
 }
 sel.onchange=()=>{teacher=sel.value;render()};
+
+// ===== 主题 =====
+const btnTheme=document.getElementById("btnTheme");
+function themeBtn(){btnTheme.textContent=document.documentElement.getAttribute("data-theme")==="dark"?"☀️ 白色主题":"🌙 黑色主题";}
+btnTheme.onclick=()=>{
+  const t=document.documentElement.getAttribute("data-theme")==="dark"?"light":"dark";
+  document.documentElement.setAttribute("data-theme",t);
+  try{localStorage.setItem("tt-theme",t)}catch(e){}
+  themeBtn();
+};
+themeBtn();
 
 // ===== 通知 =====
 let notifyOn=false, audioCtx=null, toastTimer=0;
