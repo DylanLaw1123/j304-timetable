@@ -240,7 +240,7 @@ async function showSys(title,body){
   if(!("Notification" in window)||Notification.permission!=="granted")return;
   try{
     if("serviceWorker" in navigator){
-      const reg=await navigator.serviceWorker.getRegistration();
+      const reg=await Promise.race([navigator.serviceWorker.ready,new Promise(r=>setTimeout(()=>r(null),2000))]);
       if(reg){await reg.showNotification(title,{body,tag:"timetable",renotify:true,vibrate:[200,100,200]});return;}
     }
   }catch(e){}
@@ -258,9 +258,17 @@ btnNotify.onclick=async()=>{
     else toast("已开启通知","每次换节、下课、上课、放学都会提醒你。页面需要保持打开。");
   }
 };
-document.getElementById("btnTest").onclick=()=>{
-  if("Notification" in window&&Notification.permission==="default"){try{Notification.requestPermission();}catch(e){}}
-  beep();notify("下课啦","第3节 国文结束了，接下来是第一个下课（08:50–09:10）");
+document.getElementById("btnTest").onclick=async()=>{
+  const has="Notification" in window;
+  if(has&&Notification.permission==="default"){try{await Notification.requestPermission();}catch(e){}}
+  beep();
+  notify("下课啦","第3节 国文结束了，接下来是第一个下课，08:50–09:10");
+  let tip="";
+  if(location.protocol==="file:")tip="现在是本地文件打开的，系统通知不会生效。请用 https://用户名.github.io/... 的网址打开。";
+  else if(!has)tip="这个浏览器不支持系统通知，只会有页面弹窗和提示音。";
+  else if(Notification.permission==="denied")tip="通知被浏览器拦截了。点地址栏左边的图标 → 网站设置 → 通知 → 允许，然后刷新页面再试。";
+  else if(Notification.permission!=="granted")tip="还没有授权通知，请在浏览器弹窗里点“允许”后再试一次。";
+  if(tip)setTimeout(()=>toast("没有收到系统通知？",tip),1800);
 };
 setNotifyBtn();
 
