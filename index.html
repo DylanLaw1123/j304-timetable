@@ -279,13 +279,14 @@ const EVENTS=[
   {k:"preBreak",label:"预备铃（下课）",desc:"下课结束前3分钟，铃声的短版",kind:"pre"},
   {k:"preDismiss",label:"预备铃（放学）",desc:"放学前3分钟，铃声的短版",kind:"pre"}
 ];
-const bellCfg={};
-(function(){
-  let old="m0";try{const v=localStorage.getItem("tt-bell");if(["m0","gong","wind","electric"].includes(v))old=v;}catch(e){}
-  let saved={};try{saved=JSON.parse(localStorage.getItem("tt-bells")||"{}")||{};}catch(e){}
-  EVENTS.forEach(e=>{bellCfg[e.k]=BELLS.some(b=>b[0]===saved[e.k])?saved[e.k]:old;});
-})();
-function saveBells(){try{localStorage.setItem("tt-bells",JSON.stringify(bellCfg))}catch(e){}}
+const DEFAULT_BELL="beep";              // 没特别设置的话，一律用“提示音”
+const bellCfg={}, userSet={};           // userSet 只记录你亲自改过的
+try{
+  const sv=JSON.parse(localStorage.getItem("tt-bells2")||"{}")||{};
+  EVENTS.forEach(e=>{if(BELLS.some(b=>b[0]===sv[e.k]))userSet[e.k]=sv[e.k];});
+}catch(e){}
+EVENTS.forEach(e=>{bellCfg[e.k]=userSet[e.k]||DEFAULT_BELL;});
+function saveBells(){try{localStorage.setItem("tt-bells2",JSON.stringify(userSet))}catch(e){}}
 const bellName=id=>(BELLS.find(b=>b[0]===id)||BELLS[0])[1];
 function ringSynth(kind,style="m0"){
   const AC=window.AudioContext||window.webkitAudioContext;
@@ -415,11 +416,11 @@ function previewEvent(k){
   toast("现在是"+ev.label,"铃声："+bellName(bellCfg[k])+(bellCfg[k]!=="off"&&ev.kind==="pre"?"（短版）":""));
   playEvent(k);
 }
-bellTable.onchange=e=>{const k=e.target.dataset&&e.target.dataset.k;if(k){bellCfg[k]=e.target.value;saveBells();}};
+bellTable.onchange=e=>{const k=e.target.dataset&&e.target.dataset.k;if(k){bellCfg[k]=e.target.value;userSet[k]=e.target.value;saveBells();}};
 bellTable.onclick=e=>{const k=e.target.dataset&&e.target.dataset.t;if(k)previewEvent(k);};
 bellAll.onchange=()=>{
   const v=bellAll.value;if(!v)return;
-  EVENTS.forEach(e=>{bellCfg[e.k]=v;});saveBells();buildBellPanel();
+  EVENTS.forEach(e=>{bellCfg[e.k]=v;userSet[e.k]=v;});saveBells();buildBellPanel();
   toast("已统一设置","所有事件都使用："+bellName(v));
 };
 buildBellPanel();
