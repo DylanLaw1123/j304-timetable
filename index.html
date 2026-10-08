@@ -99,7 +99,7 @@ footer a{color:var(--now)}
 <div class="wrap">
   <header>
     <div class="title"><h1>初三4 课程表</h1>
-    <div class="meta">班主任：张晓甜老师（zxt）　生效日期：2026年1月12日</div></div>
+    <div class="meta">班主任：张晓甜老师　生效日期：2026年1月12日</div></div>
     <button id="btnTheme" aria-label="切换黑白主题">🌙 黑色主题</button>
   </header>
 
@@ -136,6 +136,8 @@ footer a{color:var(--now)}
 </div>
 
 <script>
+// 老师代号 → 姓名（来自老师名单）
+const NAMES={pmx:"潘美欣",Sofea:"Sofea",wcl:"吴潮玲",cky2:"陈柯宇",zjw:"郑俊伟",wqy:"魏巧莹",zxt:"张晓甜",zsm:"张思敏",zxll:"郑欣铃",hwc:"黄韦诚",lzy:"林正誉"};
 const periods=[["07:30","08:10"],["08:10","08:50"],["09:10","09:50"],["09:50","10:30"],["10:45","11:25"],
 ["11:25","12:05"],["12:45","13:25"],["13:25","14:05"],["14:20","15:00"],["15:00","15:40"]];
 const breaks=[["08:50","09:10","第一个下课"],["10:30","10:45","第二个下课"],["12:05","12:45","第三个下课"],["14:05","14:20","第四个下课"]];
@@ -168,7 +170,7 @@ const after={1:0,3:1,5:2,7:3}; // 第几节之后是第几个下课
 function tn(t,subj){ // 老师名字后面加“老师”，可选在后面加（科目），保留（单）/（双）
   if(!t)return "";
   const m=t.match(/^([^（]+)(（.*）)?$/);
-  return m?m[1]+"老师"+(subj?"（"+subj+"）":"")+(m[2]||""):t;
+  return m?(NAMES[m[1]]||m[1])+"老师"+(subj?"（"+subj+"）":"")+(m[2]||""):t;
 }
 const nm=(r,i)=>`第${i+1}节 ${data[r][i][0]}${data[r][i][1]?"（"+tn(data[r][i][1])+"）":""}`;
 const itemName=(r,it)=>it.merged?"联课活动":nm(r,it.i);
