@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>初三4 课程表</title>
+<style>
+:root{
+  --bg:#f3f6f4; --card:#ffffff; --ink:#1d2b2a; --muted:#6a7b79; --line:#d9e2df; --now:#0f766e;
+  --华文:#fde2e0; --英文:#dbeafe; --数学:#fef3c7; --科学:#d9f2e3; --国文:#ede4fb;
+  --地理:#ffe8d1; --历史:#f1e3d3; --other:#eceff0;
+}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#121816; --card:#1b2421; --ink:#e7efed; --muted:#93a5a2; --line:#2c3935; --now:#2dd4bf;
+  --华文:#4a2a2a; --英文:#22344f; --数学:#4a3d17; --科学:#1f4030; --国文:#3a2e55; --地理:#4a3220; --历史:#3e3126; --other:#27312e;}
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{font-family:"PingFang SC","Microsoft YaHei","Noto Sans SC",system-ui,sans-serif;background:var(--bg);color:var(--ink);
+  padding:calc(16px + env(safe-area-inset-top,0px)) 16px calc(24px + env(safe-area-inset-bottom,0px));line-height:1.4}
+.wrap{max-width:1100px;margin:0 auto}
+header{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:6px 24px;margin-bottom:14px}
+h1{font-size:1.6rem;margin:0}
+.meta{color:var(--muted);font-size:.9rem}
+.tools{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:14px}
+.tools button,.tools select{font:inherit;padding:7px 12px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:8px;cursor:pointer}
+.tools button[aria-pressed=true]{background:var(--now);color:#fff;border-color:var(--now)}
+.tools button:focus-visible,.tools select:focus-visible{outline:2px solid var(--now);outline-offset:2px}
+.panel{display:grid;grid-template-columns:auto 1fr 1fr;gap:12px;margin-bottom:14px}
+.box{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 16px}
+.box .k{color:var(--muted);font-size:.8rem}
+.box .v{font-size:1.15rem;font-weight:600;margin-top:2px}
+.box .sub{color:var(--now);font-size:.9rem;font-variant-numeric:tabular-nums}
+#clock{font-size:2rem;font-weight:700;font-variant-numeric:tabular-nums;line-height:1.2}
+#date{color:var(--muted);font-size:.85rem}
+#status{display:none}
+.scroll{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--card)}
+table{border-collapse:collapse;width:100%;min-width:1000px;table-layout:fixed}
+th,td{border:1px solid var(--line);text-align:center;padding:8px 4px;font-size:.92rem}
+thead th{font-weight:600;background:var(--card)}
+thead th small{display:block;color:var(--muted);font-weight:400;font-size:.74rem}
+tbody th{width:64px;background:var(--card)}
+td .s{font-weight:600}
+td .t{display:block;color:var(--muted);font-size:.78rem}
+td.华文{background:var(--华文)}td.英文{background:var(--英文)}td.数学{background:var(--数学)}
+td.科学{background:var(--科学)}td.国文{background:var(--国文)}td.地理{background:var(--地理)}
+td.历史{background:var(--历史)}td.other{background:var(--other)}
+td.dim{opacity:.22}
+th.brk,td.brk{width:52px;background:var(--other);color:var(--muted);font-size:.8rem}
+th.brk small{font-size:.66rem}
+td.brk{writing-mode:vertical-rl;letter-spacing:.2em;padding:4px 0}
+tr.today th{color:var(--now);box-shadow:inset 3px 0 0 var(--now)}
+td.now{outline:3px solid var(--now);outline-offset:-3px}
+th.nowcol{color:var(--now)}
+.day{display:none}
+.note{color:var(--muted);font-size:.8rem;margin-top:12px}
+@media (max-width:640px){
+  .scroll{display:none}
+  .day{display:block}
+  .day .row{display:flex;gap:10px;align-items:center;padding:10px 12px;border-bottom:1px solid var(--line)}
+  .day .row .p{width:72px;font-size:.78rem;color:var(--muted);flex:none}
+  .day .row .p b{display:block;color:var(--ink);font-size:.9rem}
+  .day .row .c{flex:1;padding:8px 10px;border-radius:8px}
+  .day .row.now .c{outline:3px solid var(--now)}
+  .day .row.dim .c{opacity:.22}
+  .daybox{background:var(--card);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+  .panel{grid-template-columns:1fr 1fr}.panel .box:first-child{grid-column:1/-1}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>初三4 课程表</h1>
+    <div class="meta">班主任：张晓甜（zxt）　生效日期：2026年1月12日</div>
+  </header>
+
+  <div class="panel">
+    <div class="box"><div id="clock">--:--:--</div><div id="date"></div></div>
+    <div class="box"><div class="k">这一节</div><div class="v" id="cur">-</div><div class="sub" id="curSub"></div></div>
+    <div class="box"><div class="k">下一节</div><div class="v" id="nxt">-</div><div class="sub" id="nxtSub"></div></div>
+  </div>
+
+  <div class="tools">
+    <button id="btnWeek" aria-pressed="true">整周</button>
+    <button id="btnToday" aria-pressed="false">今天</button>
+    <select id="teacher" aria-label="按老师高亮"><option value="">全部老师</option></select>
+    <span id="status"></span>
+  </div>
+
+  <div class="scroll"><table id="grid" aria-label="每周课程表"></table></div>
+  <div class="daybox day" id="dayView"></div>
+
+  <p class="note">美术(单) / 辅导(双)：第1、2节为单双周轮换。数据按课表照片录入，如有出入请以学校为准。</p>
+</div>
+
+<script>
+const periods=[["07:30","08:10"],["08:10","08:50"],["09:10","09:50"],["09:50","10:30"],["10:45","11:25"],
+["11:25","12:05"],["12:45","13:25"],["13:25","14:05"],["14:20","15:00"],["15:00","15:40"]];
+const breaks=[["08:50","09:10","第一个下课"],["10:30","10:45","第二个下课"],["12:05","12:45","第三个下课"],["14:05","14:20","第四个下课"]];
+const days=["星期一","星期二","星期三","星期四","星期五"];
+// [科目, 老师]
+const L=(s,t)=>[s,t];
+const data=[
+ [L("英文","wcl"),L("数学","cky2"),L("周/班会",""),L("地理","zxt"),L("科学","zjw"),L("科学","zjw"),L("华文","pmx"),L("数学","cky2"),L("国文","Sofea"),L("历史","wqy")],
+ [L("电脑","zxll"),L("电脑","zxll"),L("国文","Sofea"),L("国文","Sofea"),L("华文","pmx"),L("华文","pmx"),L("科学","zjw"),L("英文","wcl"),L("地理","zxt"),L("数学","cky2")],
+ [L("华文","pmx"),L("科学","zjw"),L("品格教育","zxt"),L("品格教育","zxt"),L("数学","cky2"),L("历史","wqy"),L("英文","wcl"),L("国文","Sofea"),L("自主学习",""),L("自主学习","")],
+ [L("美术","zsm（单）"),L("辅导","lzy（双）"),L("国文","Sofea"),L("华文","pmx"),L("历史","wqy"),L("科学","zjw"),L("数学","cky2"),L("数学","cky2"),L("英文","wcl"),L("英文","wcl")],
+ [L("国文","Sofea"),L("科学","zjw"),L("地理","zxt"),L("体育","hwc"),L("英文","wcl"),L("华文","pmx"),L("数学","cky2"),L("联课活动",""),L("联课活动",""),L("联课活动","")]
+];
+const colored=["华文","英文","数学","科学","国文","地理","历史"];
+const cls=s=>colored.includes(s)?s:"other";
+const toMin=t=>{const[a,b]=t.split(":").map(Number);return a*60+b};
+
+const grid=document.getElementById("grid"), dayView=document.getElementById("dayView");
+const sel=document.getElementById("teacher"), status=document.getElementById("status");
+let mode="week", teacher="";
+
+[...new Set(data.flat().map(x=>x[1]).filter(Boolean).map(t=>t.replace(/（.*）/,"")))].sort()
+  .forEach(t=>{const o=document.createElement("option");o.value=t;o.textContent=t;sel.appendChild(o)});
+
+function now(){
+  const d=new Date(), w=d.getDay(), m=d.getHours()*60+d.getMinutes();
+  const di=w>=1&&w<=5?w-1:-1;
+  let pi=-1;
+  if(di>=0) pi=periods.findIndex(([a,b])=>m>=toMin(a)&&m<toMin(b));
+  return {di,pi,m};
+}
+const dim=c=>teacher&&!c[1].startsWith(teacher);
+
+const after={1:0,3:1,5:2,7:3}; // 第几节之后是第几个下课
+function render(){
+  const {di,pi,m}=now();
+  const bi=breaks.findIndex(b=>m>=toMin(b[0])&&m<toMin(b[1]));
+  const bnow=di>=0?bi:-1;
+  let h="<thead><tr><th>星期</th>";
+  periods.forEach((p,i)=>{
+    h+=`<th class="${i===pi?"nowcol":""}">第${i+1}节<small>${p[0]}–${p[1]}</small></th>`;
+    if(after[i]!==undefined){const b=breaks[after[i]];h+=`<th class="brk ${after[i]===bnow?"nowcol":""}">下课<small>${b[0]}–${b[1]}</small></th>`;}
+  });
+  h+="</tr></thead><tbody>";
+  const list=mode==="today"&&di>=0?[di]:[0,1,2,3,4];
+  list.forEach(r=>{
+    h+=`<tr class="${r===di?"today":""}"><th>${days[r]}</th>`;
+    data[r].forEach((c,i)=>{
+      h+=`<td class="${cls(c[0])}${dim(c)?" dim":""}${r===di&&i===pi?" now":""}"><span class="s">${c[0]}</span>${c[1]?`<span class="t">${c[1]}</span>`:""}</td>`;
+      if(after[i]!==undefined)h+=`<td class="brk${r===di&&after[i]===bnow?" now":""}">下课</td>`;
+    });
+    h+="</tr>";
+  });
+  grid.innerHTML=h+"</tbody>";
+
+  const v=di>=0?di:0;
+  let rows=di<0?`<div class="row"><span class="p">周末休息<br>显示星期一</span></div>`:"";
+  data[v].forEach((c,i)=>{
+    rows+=`<div class="row${v===di&&i===pi?" now":""}${dim(c)?" dim":""}"><span class="p"><b>第${i+1}节</b>${periods[i][0]}–${periods[i][1]}</span><div class="c" style="background:var(--${cls(c[0])})"><span class="s" style="font-weight:600">${c[0]}</span> <span style="color:var(--muted);font-size:.8rem">${c[1]}</span></div></div>`;
+    if(after[i]!==undefined){const k=after[i],b=breaks[k];
+      rows+=`<div class="row${v===di&&k===bnow?" now":""}"><span class="p"><b>下课</b>${b[0]}–${b[1]}</span><div class="c" style="background:var(--other);color:var(--muted)">${b[2]}</div></div>`;}
+  });
+  dayView.innerHTML=rows;
+}
+document.getElementById("btnWeek").onclick=e=>{mode="week";setBtn();render()};
+document.getElementById("btnToday").onclick=e=>{mode="today";setBtn();render()};
+function setBtn(){
+  document.getElementById("btnWeek").setAttribute("aria-pressed",mode==="week");
+  document.getElementById("btnToday").setAttribute("aria-pressed",mode==="today");
+}
+sel.onchange=()=>{teacher=sel.value;render()};
+const pad=n=>String(n).padStart(2,"0");
+const fmt=sec=>{const h=Math.floor(sec/3600),m=Math.floor(sec%3600/60),x=sec%60;return (h?h+"小时 ":"")+pad(m)+"分 "+pad(x)+"秒"};
+const nm=(r,i)=>`第${i+1}节 ${data[r][i][0]}${data[r][i][1]?"（"+data[r][i][1]+"）":""}`;
+let lastKey="";
+function tick(){
+  const d=new Date(), w=d.getDay(), sec=d.getHours()*3600+d.getMinutes()*60+d.getSeconds();
+  document.getElementById("clock").textContent=`${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
+  document.getElementById("date").textContent=`${d.getMonth()+1}月${d.getDate()}日 星期${"日一二三四五六"[w]}`;
+  const di=w>=1&&w<=5?w-1:-1;
+  const st=i=>toMin(periods[i][0])*60, en=i=>toMin(periods[i][1])*60;
+  let cur="-",curSub="",nxt="-",nxtSub="";
+  if(di<0){
+    cur="今天休息";
+    const dd=w===6?2:1; nxt="星期一 "+nm(0,0);
+    nxtSub="还有 "+fmt(dd*86400-sec+st(0));
+  }else{
+    const pi=periods.findIndex((_,i)=>sec>=st(i)&&sec<en(i));
+    const ni=periods.findIndex((_,i)=>st(i)>sec);
+    if(pi>=0){cur=nm(di,pi);curSub="还剩 "+fmt(en(pi)-sec);}
+    else if(ni>0){
+      const b=breaks.find(b=>sec>=toMin(b[0])*60&&sec<toMin(b[1])*60);
+      cur=b?b[2]:"课间休息"; if(b)curSub="还剩 "+fmt(toMin(b[1])*60-sec);
+    }
+    else if(ni===0){cur="还没上课";}
+    else cur="今天的课已结束";
+    if(ni>=0){nxt=nm(di,ni);nxtSub="还有 "+fmt(st(ni)-sec);}
+    else{
+      const nd=(di+1)%5, add=di===4?3:1;
+      nxt=days[nd]+" "+nm(nd,0);
+      nxtSub="还有 "+fmt(add*86400-sec+st(0));
+    }
+  }
+  cur_.textContent=cur;curSub_.textContent=curSub;nxt_.textContent=nxt;nxtSub_.textContent=nxtSub;
+  const key=di+"-"+periods.findIndex((_,i)=>sec>=st(i)&&sec<en(i))+"-"+cur;
+  if(key!==lastKey){lastKey=key;render();}
+}
+const cur_=document.getElementById("cur"),curSub_=document.getElementById("curSub"),
+      nxt_=document.getElementById("nxt"),nxtSub_=document.getElementById("nxtSub");
+render(); tick(); setInterval(tick,1000);
+</script>
+</body>
+</html>
