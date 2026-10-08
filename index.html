@@ -310,6 +310,7 @@ document.getElementById("btnTest").onclick=async()=>{
 setNotifyBtn();
 
 let prev={key:null,it:null,di:-1};
+let lastSec=null,lastDi=-2;
 let lastKey="";
 function tick(){
   const d=new Date(), w=d.getDay(), sec=d.getHours()*3600+d.getMinutes()*60+d.getSeconds();
@@ -339,6 +340,19 @@ function tick(){
   if(notifyOn&&prev.key!==null&&ck!==prev.key&&prev.it&&prev.di===di&&sec-prev.it.e*60>=0&&sec-prev.it.e*60<180){
     if(cu||ck==="post"){const [t,m2]=msgFor(di,prev.it,cu);notify(t,m2);}
   }
+  // 预备铃：每个下课结束前3分钟、放学前3分钟
+  if(notifyOn&&lastSec!==null&&lastDi===di&&di>=0){
+    const it2=items(di);
+    it2.forEach((x,idx)=>{
+      const isBreak=x.t==="b", isLast=idx===it2.length-1, T=x.e*60-180;
+      if(!(isBreak||isLast))return;
+      if(lastSec<T&&sec>=T&&sec-T<180){
+        if(isBreak){const n=it2[idx+1];notify("预备铃",`${x.name}还有3分钟结束，接下来是${itemName(di,n)}，${fmtT(n.s)}–${fmtT(n.e)}`);}
+        else notify("预备铃",`${itemName(di,x)}还有3分钟结束，3分钟后放学啦！`);
+      }
+    });
+  }
+  lastSec=sec;lastDi=di;
   prev={key:ck,it:cu,di};
   const key=di+"-"+cur;
   if(key!==lastKey){lastKey=key;render();}
