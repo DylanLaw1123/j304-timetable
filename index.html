@@ -34,6 +34,13 @@ h1{font-size:1.6rem;margin:0}
 #clock{font-size:2rem;font-weight:700;font-variant-numeric:tabular-nums;line-height:1.2}
 #date{color:var(--muted);font-size:.85rem}
 #status{display:none}
+#toast{position:fixed;left:50%;transform:translateX(-50%) translateY(-140%);top:calc(12px + env(safe-area-inset-top,0px));z-index:10;
+  width:min(92vw,420px);background:var(--now);color:#fff;border-radius:12px;padding:12px 16px;box-shadow:0 8px 24px rgba(0,0,0,.25);
+  transition:transform .35s ease;cursor:pointer}
+#toast.show{transform:translateX(-50%) translateY(0)}
+#toast b{display:block;font-size:1.05rem}
+#toast span{font-size:.92rem}
+@media (prefers-reduced-motion:reduce){#toast{transition:none}}
 .scroll{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--card)}
 table{border-collapse:collapse;width:100%;min-width:1000px;table-layout:fixed}
 th,td{border:1px solid var(--line);text-align:center;padding:8px 4px;font-size:.92rem}
@@ -70,6 +77,7 @@ th.nowcol{color:var(--now)}
 </style>
 </head>
 <body>
+<div id="toast" role="status" aria-live="polite"></div>
 <div class="wrap">
   <header>
     <h1>初三4 课程表</h1>
@@ -86,6 +94,8 @@ th.nowcol{color:var(--now)}
     <button id="btnWeek" aria-pressed="true">整周</button>
     <button id="btnToday" aria-pressed="false">今天</button>
     <select id="teacher" aria-label="按老师高亮"><option value="">全部老师</option></select>
+    <button id="btnNotify" aria-pressed="false">🔔 通知：关</button>
+    <button id="btnTest">测试通知</button>
     <span id="status"></span>
   </div>
 
@@ -196,19 +206,66 @@ function setBtn(){
 }
 sel.onchange=()=>{teacher=sel.value;render()};
 
+// ===== 通知 =====
+let notifyOn=false, audioCtx=null, toastTimer=0;
+try{notifyOn=localStorage.getItem("tt-notify")==="1"}catch(e){}
+const btnNotify=document.getElementById("btnNotify"), toastEl=document.getElementById("toast");
+function setNotifyBtn(){btnNotify.setAttribute("aria-pressed",notifyOn);btnNotify.textContent=notifyOn?"🔔 通知：开":"🔔 通知：关";}
+function toast(title,body){
+  toastEl.innerHTML=`<b>${title}</b><span>${body}</span>`;
+  toastEl.classList.add("show");
+  clearTimeout(toastTimer);toastTimer=setTimeout(()=>toastEl.classList.remove("show"),10000);
+}
+toastEl.onclick=()=>toastEl.classList.remove("show");
+function beep(){
+  try{
+    audioCtx=audioCtx||new (window.AudioContext||window.webkitAudioContext)();
+    if(audioCtx.state==="suspended")audioCtx.resume();
+    [0,0.22].forEach((t,i)=>{
+      const o=audioCtx.createOscillator(),g=audioCtx.createGain();
+      o.frequency.value=i?1040:784;o.connect(g);g.connect(audioCtx.destination);
+      const T=audioCtx.currentTime+t;
+      g.gain.setValueAtTime(0.0001,T);g.gain.exponentialRampToValueAtTime(0.25,T+0.02);g.gain.exponentialRampToValueAtTime(0.0001,T+0.2);
+      o.start(T);o.stop(T+0.21);
+    });
+  }catch(e){}
+}
+function notify(title,body){
+  toast(title,body);beep();
+  try{navigator.vibrate&&navigator.vibrate([200,100,200]);}catch(e){}
+  try{if("Notification" in window&&Notification.permission==="granted")new Notification(title,{body,tag:"timetable"});}catch(e){}
+}
+btnNotify.onclick=async()=>{
+  notifyOn=!notifyOn;
+  try{localStorage.setItem("tt-notify",notifyOn?"1":"0")}catch(e){}
+  setNotifyBtn();
+  if(notifyOn){
+    beep(); // 在点击时解锁声音
+    if("Notification" in window&&Notification.permission==="default"){try{await Notification.requestPermission();}catch(e){}}
+    if(!("Notification" in window)||Notification.permission!=="granted")toast("已开启页内提醒","浏览器没有授权系统通知，所以只会在页面里弹窗并响铃。页面需要保持打开。");
+    else toast("已开启通知","每次换节、下课、上课、放学都会提醒你。页面需要保持打开。");
+  }
+};
+document.getElementById("btnTest").onclick=()=>{
+  if("Notification" in window&&Notification.permission==="default"){try{Notification.requestPermission();}catch(e){}}
+  beep();notify("下课啦","第3节 国文结束了，接下来是第一个下课（08:50–09:10）");
+};
+setNotifyBtn();
+
+let prev={key:null,it:null,di:-1};
 let lastKey="";
 function tick(){
   const d=new Date(), w=d.getDay(), sec=d.getHours()*3600+d.getMinutes()*60+d.getSeconds();
   document.getElementById("clock").textContent=`${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
   document.getElementById("date").textContent=`${d.getMonth()+1}月${d.getDate()}日 星期${"日一二三四五六"[w]}`;
   const di=w>=1&&w<=5?w-1:-1, first=toMin(periods[0][0])*60;
-  let cur="-",curSub="",nxt="-",nxtSub="";
+  let cur="-",curSub="",nxt="-",nxtSub="",cu=null;
   if(di<0){
     cur="今天休息";
     nxt="星期一 "+nm(0,0); nxtSub="还有 "+fmt((w===6?2:1)*86400-sec+first);
   }else{
     const it=items(di);
-    const cu=it.find(x=>sec>=x.s*60&&sec<x.e*60);
+    cu=it.find(x=>sec>=x.s*60&&sec<x.e*60);
     const nx=it.find(x=>x.t==="c"&&x.s*60>sec);
     if(cu){
       cur=cu.t==="c"?itemName(di,cu):cu.name; curSub="还剩 "+fmt(cu.e*60-sec);
@@ -220,6 +277,19 @@ function tick(){
     }
   }
   cur_.textContent=cur;curSub_.textContent=curSub;nxt_.textContent=nxt;nxtSub_.textContent=nxtSub;
+  // 状态切换提醒
+  const ck=di<0?"off":(cu?di+":"+cu.t+":"+(cu.t==="c"?cu.i:cu.k):(sec<first?"pre":"post"));
+  if(notifyOn&&prev.key!==null&&ck!==prev.key&&prev.it&&prev.di===di&&sec-prev.it.e*60>=0&&sec-prev.it.e*60<120){
+    const pn=prev.it.t==="c"?itemName(di,prev.it):prev.it.name;
+    if(cu){
+      const nn=(cu.t==="c"?itemName(di,cu):cu.name)+`，${fmtT(cu.s)}–${fmtT(cu.e)}`;
+      const title=prev.it.t==="b"?"上课啦":(cu.t==="b"?"下课啦":"换节啦");
+      notify(title,`${pn}结束了，接下来是${nn}`);
+    }else if(ck==="post"){
+      notify("放学啦",`${pn}结束了，放学啦！${di===4?"周末愉快～":"明天见～"}`);
+    }
+  }
+  prev={key:ck,it:cu,di};
   const key=di+"-"+cur;
   if(key!==lastKey){lastKey=key;render();}
 }
