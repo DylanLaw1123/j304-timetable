@@ -70,7 +70,11 @@ th.nowcol{color:var(--now)}
 footer{margin-top:20px;padding-top:14px;border-top:1px solid var(--line);text-align:center;color:var(--muted);font-size:.85rem;line-height:1.7}
 footer a{color:var(--now)}
 .bells{margin-top:16px;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
-.bells h2{font-size:1.05rem;margin:0 0 10px}
+.bells h2{font-size:1.05rem;margin:0 0 10px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+#btnBellCollapse{flex:none;font:inherit;font-size:.82rem;font-weight:500;padding:6px 11px;border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:8px;cursor:pointer;white-space:nowrap;transition:background .15s,border-color .15s}
+#btnBellCollapse:hover{background:var(--card);border-color:var(--now)}
+#btnBellCollapse:focus-visible{outline:2px solid var(--now);outline-offset:2px}
+#btnBellCollapse:active{transform:scale(.98)}
 #bellTable{min-width:0;table-layout:auto;border:0}
 #bellTable th,#bellTable td{border:0;border-bottom:1px solid var(--line);text-align:left;padding:8px 6px;vertical-align:middle}
 #bellTable th{font-size:.8rem;color:var(--muted);font-weight:600}
@@ -124,10 +128,12 @@ footer a{color:var(--now)}
   <p class="note">美术(单) / 辅导(双)：第1、2节为单双周轮换。星期五第7节后 13:25–13:40 下课，13:40–15:40 为联课活动。数据按课表照片录入，如有出入请以学校为准。</p>
 
   <section class="bells" id="bellPanel">
-    <h2>🔔 铃声设置</h2>
-    <table id="bellTable" aria-label="铃声设置"></table>
-    <div class="all">统一设置：<select id="bellAll" aria-label="所有事件统一使用同一种铃声"></select></div>
-    <p class="hint">选“静音”就不响铃，只显示通知。</p>
+    <h2><span>🔔 铃声设置</span><button id="btnBellCollapse" type="button" aria-expanded="true" aria-controls="bellContent">收起 ▲</button></h2>
+    <div id="bellContent">
+      <table id="bellTable" aria-label="铃声设置"></table>
+      <div class="all">统一设置：<select id="bellAll" aria-label="所有事件统一使用同一种铃声"></select></div>
+      <p class="hint">选“静音”就不响铃，只显示通知。</p>
+    </div>
   </section>
 
   <footer>
@@ -426,6 +432,14 @@ bellAll.onchange=()=>{
   toast("已统一设置","所有事件都使用："+bellName(v));
 };
 buildBellPanel();
+const btnBellCollapse=document.getElementById("btnBellCollapse");
+const bellContent=document.getElementById("bellContent");
+btnBellCollapse.onclick=()=>{
+  const collapsed=btnBellCollapse.getAttribute("aria-expanded")==="true";
+  btnBellCollapse.setAttribute("aria-expanded",String(!collapsed));
+  bellContent.hidden=collapsed;
+  btnBellCollapse.textContent=collapsed?"展开 ▼":"收起 ▲";
+};
 setNotifyBtn();
 
 let prev={key:null,it:null,di:-1};
