@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -17,36 +16,20 @@ document.documentElement.setAttribute("data-theme",t);})();
   --华文:#fde2e0; --英文:#dbeafe; --数学:#fef3c7; --科学:#d9f2e3; --国文:#ede4fb;
   --地理:#ffe8d1; --历史:#f1e3d3; --联课活动:#cdf1f5; --other:#eceff0;
 }
-:root[data-theme="dark]{
-}
-:root[data-theme="dark"]{
-  color-scheme:dark;
-  --bg:#121816; --card:#1b2421; --ink:#e7efed; --muted:#93a5a2; --line:#2c3935; --now:#2dd4bf;
-  --华文:#4a2a2a; --英文:#22344f; --数学:#4a3d17; --科学:#1f4030; --国文:#3a2e55;
-  --地理:#4a3220; --历史:#3e3126; --联课活动:#164650; --other:#27312e;
-}
+:root[data-theme="dark"]{color-scheme:dark;--bg:#121816; --card:#1b2421; --ink:#e7efed; --muted:#93a5a2; --line:#2c3935; --now:#2dd4bf;
+  --华文:#4a2a2a; --英文:#22344f; --数学:#4a3d17; --科学:#1f4030; --国文:#3a2e55; --地理:#4a3220; --历史:#3e3126; --联课活动:#164650; --other:#27312e;}
 *{box-sizing:border-box}
 html,body{margin:0}
-body{
-  font-family:"PingFang SC","Microsoft YaHei","Noto Sans SC",system-ui,sans-serif;
-  background:var(--bg);color:var(--ink);
-  padding:calc(16px + env(safe-area-inset-top,0px)) 16px calc(24px + env(safe-area-inset-bottom,0px));
-  line-height:1.4
-}
+body{font-family:"PingFang SC","Microsoft YaHei","Noto Sans SC",system-ui,sans-serif;background:var(--bg);color:var(--ink);
+  padding:calc(16px + env(safe-area-inset-top,0px)) 16px calc(24px + env(safe-area-inset-bottom,0px));line-height:1.4}
 .wrap{max-width:1100px;margin:0 auto}
 header{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:14px}
-#btnTheme{
-  flex:none;font:inherit;font-size:.9rem;padding:7px 12px;border:1px solid var(--line);
-  background:var(--card);color:var(--ink);border-radius:8px;cursor:pointer;white-space:nowrap
-}
+#btnTheme{flex:none;font:inherit;font-size:.9rem;padding:7px 12px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:8px;cursor:pointer;white-space:nowrap}
 #btnTheme:focus-visible{outline:2px solid var(--now);outline-offset:2px}
 h1{font-size:1.6rem;margin:0}
 .meta{color:var(--muted);font-size:.9rem}
 .tools{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:14px}
-.tools button,.tools select{
-  font:inherit;padding:7px 12px;border:1px solid var(--line);
-  background:var(--card);color:var(--ink);border-radius:8px;cursor:pointer
-}
+.tools button,.tools select{font:inherit;padding:7px 12px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:8px;cursor:pointer}
 .tools button[aria-pressed=true]{background:var(--now);color:#fff;border-color:var(--now)}
 .tools button:focus-visible,.tools select:focus-visible{outline:2px solid var(--now);outline-offset:2px}
 .panel{display:grid;grid-template-columns:auto 1fr 1fr;gap:12px;margin-bottom:14px}
@@ -57,13 +40,9 @@ h1{font-size:1.6rem;margin:0}
 #clock{font-size:2rem;font-weight:700;font-variant-numeric:tabular-nums;line-height:1.2}
 #date{color:var(--muted);font-size:.85rem}
 #status{display:none}
-#toast{
-  position:fixed;left:50%;transform:translateX(-50%) translateY(-140%);
-  top:calc(12px + env(safe-area-inset-top,0px));z-index:10;
-  width:min(92vw,420px);background:var(--now);color:#fff;border-radius:12px;
-  padding:12px 16px;box-shadow:0 8px 24px rgba(0,0,0,.25);
-  transition:transform .35s ease;cursor:pointer
-}
+#toast{position:fixed;left:50%;transform:translateX(-50%) translateY(-140%);top:calc(12px + env(safe-area-inset-top,0px));z-index:10;
+  width:min(92vw,420px);background:var(--now);color:#fff;border-radius:12px;padding:12px 16px;box-shadow:0 8px 24px rgba(0,0,0,.25);
+  transition:transform .35s ease;cursor:pointer}
 #toast.show{transform:translateX(-50%) translateY(0)}
 #toast b{display:block;font-size:1.05rem}
 #toast span{font-size:.92rem}
@@ -76,15 +55,9 @@ thead th small{display:block;color:var(--muted);font-weight:400;font-size:.74rem
 tbody th{width:64px;background:var(--card)}
 td .s{font-weight:600}
 td .t{display:block;color:var(--muted);font-size:.78rem}
-td.华文{background:var(--华文)}
-td.英文{background:var(--英文)}
-td.数学{background:var(--数学)}
-td.科学{background:var(--科学)}
-td.国文{background:var(--国文)}
-td.地理{background:var(--地理)}
-td.历史{background:var(--历史)}
-td.联课活动{background:var(--联课活动)}
-td.other{background:var(--other)}
+td.华文{background:var(--华文)}td.英文{background:var(--英文)}td.数学{background:var(--数学)}
+td.科学{background:var(--科学)}td.国文{background:var(--国文)}td.地理{background:var(--地理)}
+td.历史{background:var(--历史)}td.联课活动{background:var(--联课活动)}td.other{background:var(--other)}
 td.dim{opacity:.22}
 th.brk,td.brk{width:52px;background:var(--other);color:var(--muted);font-size:.8rem}
 th.brk small{font-size:.66rem}
@@ -98,11 +71,7 @@ footer{margin-top:20px;padding-top:14px;border-top:1px solid var(--line);text-al
 footer a{color:var(--now)}
 .bells{margin-top:16px;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
 .bells h2{font-size:1.05rem;margin:0 0 10px;display:flex;align-items:center;justify-content:space-between;gap:12px}
-#btnBellCollapse{
-  flex:none;font:inherit;font-size:.82rem;font-weight:500;padding:6px 11px;
-  border:1px solid var(--line);background:var(--bg);color:var(--ink);
-  border-radius:8px;cursor:pointer;white-space:nowrap;transition:background .15s,border-color .15s
-}
+#btnBellCollapse{flex:none;font:inherit;font-size:.82rem;font-weight:500;padding:6px 11px;border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:8px;cursor:pointer;white-space:nowrap;transition:background .15s,border-color .15s}
 #btnBellCollapse:hover{background:var(--card);border-color:var(--now)}
 #btnBellCollapse:focus-visible{outline:2px solid var(--now);outline-offset:2px}
 #btnBellCollapse:active{transform:scale(.98)}
@@ -110,13 +79,8 @@ footer a{color:var(--now)}
 #bellTable th,#bellTable td{border:0;border-bottom:1px solid var(--line);text-align:left;padding:8px 6px;vertical-align:middle}
 #bellTable th{font-size:.8rem;color:var(--muted);font-weight:600}
 #bellTable td small{display:block;color:var(--muted);font-size:.78rem;margin-top:2px}
-#bellTable select,#bellAll,#bellTable button{
-  font:inherit;font-size:.9rem;padding:6px 10px;border:1px solid var(--line);
-  background:var(--card);color:var(--ink);border-radius:8px;cursor:pointer;max-width:100%
-}
-#bellTable select:focus-visible,#bellAll:focus-visible,#bellTable button:focus-visible{
-  outline:2px solid var(--now);outline-offset:2px
-}
+#bellTable select,#bellAll,#bellTable button{font:inherit;font-size:.9rem;padding:6px 10px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:8px;cursor:pointer;max-width:100%}
+#bellTable select:focus-visible,#bellAll:focus-visible,#bellTable button:focus-visible{outline:2px solid var(--now);outline-offset:2px}
 .bells .all{margin-top:12px;font-size:.9rem}
 .bells .hint{color:var(--muted);font-size:.8rem;margin:10px 0 0}
 .note{color:var(--muted);font-size:.8rem;margin-top:12px}
@@ -130,8 +94,7 @@ footer a{color:var(--now)}
   .day .row.now .c{outline:3px solid var(--now)}
   .day .row.dim .c{opacity:.22}
   .daybox{background:var(--card);border:1px solid var(--line);border-radius:10px;overflow:hidden}
-  .panel{grid-template-columns:1fr 1fr}
-  .panel .box:first-child{grid-column:1/-1}
+  .panel{grid-template-columns:1fr 1fr}.panel .box:first-child{grid-column:1/-1}
 }
 </style>
 </head>
@@ -139,36 +102,21 @@ footer a{color:var(--now)}
 <div id="toast" role="status" aria-live="polite"></div>
 <div class="wrap">
   <header>
-    <div class="title">
-      <h1>初三4 课程表</h1>
-      <div class="meta">班主任：张晓甜老师　生效日期：2026年1月12日</div>
-    </div>
+    <div class="title"><h1>初三4 课程表</h1>
+    <div class="meta">班主任：张晓甜老师　生效日期：2026年1月12日</div></div>
     <button id="btnTheme" aria-label="切换黑白主题">🌙 黑色主题</button>
   </header>
 
   <div class="panel">
-    <div class="box">
-      <div id="clock">--:--:--</div>
-      <div id="date"></div>
-    </div>
-    <div class="box">
-      <div class="k">这一节</div>
-      <div class="v" id="cur">-</div>
-      <div class="sub" id="curSub"></div>
-    </div>
-    <div class="box">
-      <div class="k">下一节</div>
-      <div class="v" id="nxt">-</div>
-      <div class="sub" id="nxtSub"></div>
-    </div>
+    <div class="box"><div id="clock">--:--:--</div><div id="date"></div></div>
+    <div class="box"><div class="k">这一节</div><div class="v" id="cur">-</div><div class="sub" id="curSub"></div></div>
+    <div class="box"><div class="k">下一节</div><div class="v" id="nxt">-</div><div class="sub" id="nxtSub"></div></div>
   </div>
 
   <div class="tools">
     <button id="btnWeek" aria-pressed="true">整周</button>
     <button id="btnToday" aria-pressed="false">今天</button>
-    <select id="teacher" aria-label="按老师高亮">
-      <option value="">全部老师</option>
-    </select>
+    <select id="teacher" aria-label="按老师高亮"><option value="">全部老师</option></select>
     <button id="btnNotify" aria-pressed="false">🔔 通知：关</button>
     <button id="btnTest">测试通知</button>
     <span id="status"></span>
@@ -177,22 +125,13 @@ footer a{color:var(--now)}
   <div class="scroll"><table id="grid" aria-label="每周课程表"></table></div>
   <div class="daybox day" id="dayView"></div>
 
-  <p class="note">
-    美术(单) / 辅导(双)：第1、2节为单双周轮换。星期五第7节后
-    13:25–13:40 下课，13:40–15:40 为联课活动。数据按课表照片录入，如有出入请以学校为准。
-  </p>
+  <p class="note">美术(单) / 辅导(双)：第1、2节为单双周轮换。星期五第7节后 13:25–13:40 下课，13:40–15:40 为联课活动。数据按课表照片录入，如有出入请以学校为准。</p>
 
   <section class="bells" id="bellPanel">
-    <h2>
-      <span>🔔 铃声设置</span>
-      <button id="btnBellCollapse" type="button" aria-expanded="true" aria-controls="bellContent">收起 ▲</button>
-    </h2>
+    <h2><span>🔔 铃声设置</span><button id="btnBellCollapse" type="button" aria-expanded="true" aria-controls="bellContent">收起 ▲</button></h2>
     <div id="bellContent">
       <table id="bellTable" aria-label="铃声设置"></table>
-      <div class="all">
-        统一设置：
-        <select id="bellAll" aria-label="所有事件统一使用同一种铃声"></select>
-      </div>
+      <div class="all">统一设置：<select id="bellAll" aria-label="所有事件统一使用同一种铃声"></select></div>
       <p class="hint">选“静音”就不响铃，只显示通知。</p>
     </div>
   </section>
@@ -203,117 +142,52 @@ footer a{color:var(--now)}
 </div>
 
 <script>
-// 老师代号 → 姓名
-const NAMES={
-  pmx:"潘美欣",Sofea:"Sofea",wcl:"吴潮玲",cky2:"陈柯宇",
-  zjw:"郑俊伟",wqy:"魏巧莹",zxt:"张晓甜",zsm:"张思敏",
-  zxll:"郑欣铃",hwc:"黄韦诚",lzy:"林正誉"
-};
-
-const periods=[
-  ["07:30","08:10"],["08:10","08:50"],
-  ["09:10","09:50"],["09:50","10:30"],
-  ["10:45","11:25"],["11:25","12:05"],
-  ["12:45","13:25"],["13:25","14:05"],
-  ["14:20","15:00"],["15:00","15:40"]
-];
-
-const breaks=[
-  ["08:50","09:10","第一个下课"],
-  ["10:30","10:45","第二个下课"],
-  ["12:05","12:45","第三个下课"],
-  ["14:05","14:20","第四个下课"]
-];
-
+// 老师代号 → 姓名（来自老师名单）
+const NAMES={pmx:"潘美欣",Sofea:"Sofea",wcl:"吴潮玲",cky2:"陈柯宇",zjw:"郑俊伟",wqy:"魏巧莹",zxt:"张晓甜",zsm:"张思敏",zxll:"郑欣铃",hwc:"黄韦诚",lzy:"林正誉"};
+const periods=[["07:30","08:10"],["08:10","08:50"],["09:10","09:50"],["09:50","10:30"],["10:45","11:25"],
+["11:25","12:05"],["12:45","13:25"],["13:25","14:05"],["14:20","15:00"],["15:00","15:40"]];
+const breaks=[["08:50","09:10","第一个下课"],["10:30","10:45","第二个下课"],["12:05","12:45","第三个下课"],["14:05","14:20","第四个下课"]];
 const days=["星期一","星期二","星期三","星期四","星期五"];
+// [科目, 老师]
 const L=(s,t)=>[s,t];
-
 const data=[
- [
-  L("英文","wcl"),L("数学","cky2"),L("周/班会",""),
-  L("地理","zxt"),L("科学","zjw"),L("科学","zjw"),
-  L("华文","pmx"),L("数学","cky2"),L("国文","Sofea"),L("历史","wqy")
- ],
- [
-  L("电脑","zxll"),L("电脑","zxll"),L("国文","Sofea"),
-  L("国文","Sofea"),L("华文","pmx"),L("华文","pmx"),
-  L("科学","zjw"),L("英文","wcl"),L("地理","zxt"),L("数学","cky2")
- ],
- [
-  L("华文","pmx"),L("科学","zjw"),L("品格教育","zxt"),
-  L("品格教育","zxt"),L("数学","cky2"),L("历史","wqy"),
-  L("英文","wcl"),L("国文","Sofea"),L("自主学习",""),L("自主学习","")
- ],
- [
-  L("美术","zsm（单）"),L("辅导","lzy（双）"),L("国文","Sofea"),
-  L("华文","pmx"),L("历史","wqy"),L("科学","zjw"),
-  L("数学","cky2"),L("数学","cky2"),L("英文","wcl"),L("英文","wcl")
- ],
- [
-  L("国文","Sofea"),L("科学","zjw"),L("地理","zxt"),
-  L("体育","hwc"),L("英文","wcl"),L("华文","pmx"),
-  L("数学","cky2"),L("联课活动",""),L("联课活动",""),L("联课活动","")
- ]
+ [L("英文","wcl"),L("数学","cky2"),L("周/班会",""),L("地理","zxt"),L("科学","zjw"),L("科学","zjw"),L("华文","pmx"),L("数学","cky2"),L("国文","Sofea"),L("历史","wqy")],
+ [L("电脑","zxll"),L("电脑","zxll"),L("国文","Sofea"),L("国文","Sofea"),L("华文","pmx"),L("华文","pmx"),L("科学","zjw"),L("英文","wcl"),L("地理","zxt"),L("数学","cky2")],
+ [L("华文","pmx"),L("科学","zjw"),L("品格教育","zxt"),L("品格教育","zxt"),L("数学","cky2"),L("历史","wqy"),L("英文","wcl"),L("国文","Sofea"),L("自主学习",""),L("自主学习","")],
+ [L("美术","zsm（单）"),L("辅导","lzy（双）"),L("国文","Sofea"),L("华文","pmx"),L("历史","wqy"),L("科学","zjw"),L("数学","cky2"),L("数学","cky2"),L("英文","wcl"),L("英文","wcl")],
+ [L("国文","Sofea"),L("科学","zjw"),L("地理","zxt"),L("体育","hwc"),L("英文","wcl"),L("华文","pmx"),L("数学","cky2"),L("联课活动",""),L("联课活动",""),L("联课活动","")]
 ];
-
 const colored=["华文","英文","数学","科学","国文","地理","历史","联课活动"];
 const cls=s=>colored.includes(s)?s:"other";
 const toMin=t=>{const[a,b]=t.split(":").map(Number);return a*60+b};
 
-const grid=document.getElementById("grid");
-const dayView=document.getElementById("dayView");
-const sel=document.getElementById("teacher");
-const status=document.getElementById("status");
-let mode="week",teacher="";
+const grid=document.getElementById("grid"), dayView=document.getElementById("dayView");
+const sel=document.getElementById("teacher"), status=document.getElementById("status");
+let mode="week", teacher="";
 
 const tsub={};
-data.flat().forEach(([sj,t])=>{
-  if(!t)return;
-  const k=t.replace(/（.*）/,"");
-  (tsub[k]=tsub[k]||new Set()).add(sj);
-});
-
-const tn=(t,subj)=>{
-  if(!t)return "";
-  const m=t.match(/^([^（]+)(（.*）)?$/);
-  return m
-    ?(NAMES[m[1]]||m[1])+"老师"+(subj?"（"+subj+"）":"")+(m[2]||"")
-    :t;
-};
-
-Object.keys(tsub).sort().forEach(t=>{
-  const o=document.createElement("option");
-  o.value=t;
-  o.textContent=tn(t,[...tsub[t]].join("、"));
-  sel.appendChild(o);
-});
+data.flat().forEach(([sj,t])=>{if(!t)return;const k=t.replace(/（.*）/,"");(tsub[k]=tsub[k]||new Set()).add(sj);});
+Object.keys(tsub).sort().forEach(t=>{const o=document.createElement("option");o.value=t;o.textContent=tn(t,[...tsub[t]].join("、"));sel.appendChild(o)});
 
 const pad=n=>String(n).padStart(2,"0");
 const fmtT=m=>pad(Math.floor(m/60))+":"+pad(m%60);
-const fmt=sec=>{
-  const h=Math.floor(sec/3600),m=Math.floor(sec%3600/60),x=sec%60;
-  return (h?h+"小时 ":"")+pad(m)+"分 "+pad(x)+"秒";
-};
-const after={1:0,3:1,5:2,7:3};
-
-const nm=(r,i)=>
-  `第${i+1}节 ${data[r][i][0]}${data[r][i][1]?"（"+tn(data[r][i][1])+"）":""}`;
+const fmt=sec=>{const h=Math.floor(sec/3600),m=Math.floor(sec%3600/60),x=sec%60;return (h?h+"小时 ":"")+pad(m)+"分 "+pad(x)+"秒"};
+const after={1:0,3:1,5:2,7:3}; // 第几节之后是第几个下课
+function tn(t,subj){ // 老师名字后面加“老师”，可选在后面加（科目），保留（单）/（双）
+  if(!t)return "";
+  const m=t.match(/^([^（]+)(（.*）)?$/);
+  return m?(NAMES[m[1]]||m[1])+"老师"+(subj?"（"+subj+"）":"")+(m[2]||""):t;
+}
+const nm=(r,i)=>`第${i+1}节 ${data[r][i][0]}${data[r][i][1]?"（"+tn(data[r][i][1])+"）":""}`;
 const itemName=(r,it)=>it.merged?"联课活动":nm(r,it.i);
 
+// 一天的时间线（上课 + 下课）。星期五第4个下课是 13:25–13:40，之后是联课活动 13:40–15:40
 function items(r){
-  const out=[];
-  const bk=k=>({
-    t:"b",k,s:toMin(breaks[k][0]),e:toMin(breaks[k][1]),name:breaks[k][2]
-  });
-
+  const out=[], bk=k=>({t:"b",k,s:toMin(breaks[k][0]),e:toMin(breaks[k][1]),name:breaks[k][2]});
   for(let i=0;i<10;i++){
     if(r===4&&i>=7){
-      if(i===7){
-        out.push({
-          t:"b",k:3,s:toMin("13:25"),e:toMin("13:40"),name:breaks[3][2]
-        });
-        out.push({t:"c",i:7,s:toMin("13:40"),e:toMin("15:40"),merged:true});
-      }
+      if(i===7){out.push({t:"b",k:3,s:toMin("13:25"),e:toMin("13:40"),name:breaks[3][2]});
+        out.push({t:"c",i:7,s:toMin("13:40"),e:toMin("15:40"),merged:true});}
       continue;
     }
     out.push({t:"c",i,s:toMin(periods[i][0]),e:toMin(periods[i][1])});
@@ -321,61 +195,44 @@ function items(r){
   }
   return out;
 }
-
 function now(){
-  const d=new Date(),w=d.getDay();
-  return {di:w>=1&&w<=5?w-1:-1,m:d.getHours()*60+d.getMinutes()};
+  const d=new Date(), w=d.getDay();
+  const di=w>=1&&w<=5?w-1:-1;
+  return {di,m:d.getHours()*60+d.getMinutes()};
 }
-
 const dim=c=>teacher&&!c[1].startsWith(teacher);
 
 function render(){
   const {di,m}=now();
   const cu=di>=0?items(di).find(x=>m>=x.s&&m<x.e):null;
-  const pi=cu&&cu.t==="c"?cu.i:-1;
-  const bnow=cu&&cu.t==="b"?cu.k:-1;
-
+  const pi=cu&&cu.t==="c"?cu.i:-1, bnow=cu&&cu.t==="b"?cu.k:-1;
   let h="<thead><tr><th>星期</th>";
   periods.forEach((p,i)=>{
     h+=`<th class="${i===pi?"nowcol":""}">第${i+1}节<small>${p[0]}–${p[1]}</small></th>`;
-    if(after[i]!==undefined){
-      const b=breaks[after[i]];
-      h+=`<th class="brk ${after[i]===bnow?"nowcol":""}">下课<small>${b[0]}–${b[1]}</small></th>`;
-    }
+    if(after[i]!==undefined){const b=breaks[after[i]];h+=`<th class="brk ${after[i]===bnow?"nowcol":""}">下课<small>${b[0]}–${b[1]}</small></th>`;}
   });
   h+="</tr></thead><tbody>";
-
   const list=mode==="today"&&di>=0?[di]:[0,1,2,3,4];
-
   list.forEach(r=>{
     h+=`<tr class="${r===di?"today":""}"><th>${days[r]}</th>`;
-
     data[r].forEach((c,i)=>{
       if(r===4&&i>=8)return;
-
       if(r===4&&i===7){
         h+=`<td class="brk h${r===di&&bnow===3?" now":""}">下课<span class="t">13:25–13:40</span></td>`;
         h+=`<td colspan="3" class="联课活动${dim(c)?" dim":""}${r===di&&pi===7?" now":""}"><span class="s">联课活动</span><span class="t">13:40–15:40</span></td>`;
         return;
       }
-
       h+=`<td class="${cls(c[0])}${dim(c)?" dim":""}${r===di&&i===pi?" now":""}"><span class="s">${c[0]}</span>${c[1]?`<span class="t">${tn(c[1],c[0])}</span>`:""}</td>`;
-
       if(after[i]!==undefined)h+=`<td class="brk${r===di&&after[i]===bnow?" now":""}">下课</td>`;
     });
-
     h+="</tr>";
   });
-
   grid.innerHTML=h+"</tbody>";
 
   const v=di>=0?di:0;
   let rows=di<0?`<div class="row"><span class="p">周末休息<br>显示星期一</span></div>`:"";
-
   items(v).forEach(it=>{
-    const t=`${fmtT(it.s)}–${fmtT(it.e)}`;
-    const on=v===di&&cu&&cu.t===it.t&&(it.t==="c"?cu.i===it.i:cu.k===it.k);
-
+    const t=`${fmtT(it.s)}–${fmtT(it.e)}`, on=v===di&&cu&&cu.t===it.t&&(it.t==="c"?cu.i===it.i:cu.k===it.k);
     if(it.t==="c"){
       const c=data[v][it.i];
       rows+=`<div class="row${on?" now":""}${dim(c)?" dim":""}"><span class="p"><b>${it.merged?"联课":"第"+(it.i+1)+"节"}</b>${t}</span><div class="c" style="background:var(--${cls(c[0])})"><span class="s" style="font-weight:600">${c[0]}</span> <span style="color:var(--muted);font-size:.8rem">${tn(c[1],c[0])}</span></div></div>`;
@@ -383,32 +240,19 @@ function render(){
       rows+=`<div class="row${on?" now":""}"><span class="p"><b>下课</b>${t}</span><div class="c" style="background:var(--other);color:var(--muted)">${it.name}</div></div>`;
     }
   });
-
   dayView.innerHTML=rows;
 }
-
-document.getElementById("btnWeek").onclick=()=>{
-  mode="week";setBtn();render();
-};
-document.getElementById("btnToday").onclick=()=>{
-  mode="today";setBtn();render();
-};
-
+document.getElementById("btnWeek").onclick=e=>{mode="week";setBtn();render()};
+document.getElementById("btnToday").onclick=e=>{mode="today";setBtn();render()};
 function setBtn(){
   document.getElementById("btnWeek").setAttribute("aria-pressed",mode==="week");
   document.getElementById("btnToday").setAttribute("aria-pressed",mode==="today");
 }
-
 sel.onchange=()=>{teacher=sel.value;render()};
 
 // ===== 主题 =====
 const btnTheme=document.getElementById("btnTheme");
-
-function themeBtn(){
-  btnTheme.textContent=document.documentElement.getAttribute("data-theme")==="dark"
-    ?"☀️ 白色主题":"🌙 黑色主题";
-}
-
+function themeBtn(){btnTheme.textContent=document.documentElement.getAttribute("data-theme")==="dark"?"☀️ 白色主题":"🌙 黑色主题";}
 btnTheme.onclick=()=>{
   const t=document.documentElement.getAttribute("data-theme")==="dark"?"light":"dark";
   document.documentElement.setAttribute("data-theme",t);
@@ -418,36 +262,23 @@ btnTheme.onclick=()=>{
 themeBtn();
 
 // ===== 通知 =====
-let notifyOn=false,audioCtx=null,toastTimer=0;
+let notifyOn=false, audioCtx=null, toastTimer=0;
 try{notifyOn=localStorage.getItem("tt-notify")==="1"}catch(e){}
-
-const btnNotify=document.getElementById("btnNotify");
-const toastEl=document.getElementById("toast");
-
-function setNotifyBtn(){
-  btnNotify.setAttribute("aria-pressed",notifyOn);
-  btnNotify.textContent=notifyOn?"🔔 通知：开":"🔔 通知：关";
-}
-
+const btnNotify=document.getElementById("btnNotify"), toastEl=document.getElementById("toast");
+function setNotifyBtn(){btnNotify.setAttribute("aria-pressed",notifyOn);btnNotify.textContent=notifyOn?"🔔 通知：开":"🔔 通知：关";}
 function toast(title,body){
   toastEl.innerHTML=`<b>${title}</b><span>${body}</span>`;
   toastEl.classList.add("show");
-  clearTimeout(toastTimer);
-  toastTimer=setTimeout(()=>toastEl.classList.remove("show"),10000);
+  clearTimeout(toastTimer);toastTimer=setTimeout(()=>toastEl.classList.remove("show"),10000);
 }
-
 toastEl.onclick=()=>toastEl.classList.remove("show");
-
 // ===== 铃声 =====
+// 数字是相对中央 C 的半音数，null 是停顿；step 是每个音的间隔（秒）
 const MELODIES=[
-  {id:"m0",name:"校园钟声",step:0.6,dec:1.8,pre:4,notes:[4,0,2,-5,null,-5,2,4,0]}
+  {id:"m0",name:"校园钟声",step:0.6,dec:1.8,pre:4,notes:[4,0,2,-5,null,-5,2,4,0]}   // Mi Do Re Sol | Sol Re Mi Do
 ];
-
-const BELLS=[
-  ["m0","校园钟声"],["beep","提示音"],["gong","铜钟"],
-  ["wind","风铃"],["electric","电铃"],["off","静音"]
-];
-
+const BELLS=[["m0","校园钟声"],["beep","提示音"],["gong","铜钟"],["wind","风铃"],["electric","电铃"],["off","静音"]];
+// kind: ring = 完整铃声，pre = 短版（预备铃）
 const EVENTS=[
   {k:"start",label:"上课铃",desc:"下课结束、开始上课时",kind:"ring"},
   {k:"end",label:"下课铃",desc:"一节课结束、开始下课时",kind:"ring"},
@@ -456,69 +287,48 @@ const EVENTS=[
   {k:"preBreak",label:"预备铃（下课）",desc:"下课结束前3分钟，铃声的短版",kind:"pre"},
   {k:"preDismiss",label:"预备铃（放学）",desc:"放学前3分钟，铃声的短版",kind:"pre"}
 ];
-
-const DEFAULT_BELL="beep";
-const bellCfg={},userSet={};
-
+const DEFAULT_BELL="beep";              // 没特别设置的话，一律用“提示音”
+const bellCfg={}, userSet={};           // userSet 只记录你亲自改过的
 try{
   const sv=JSON.parse(localStorage.getItem("tt-bells2")||"{}")||{};
-  EVENTS.forEach(e=>{
-    if(BELLS.some(b=>b[0]===sv[e.k]))userSet[e.k]=sv[e.k];
-  });
+  EVENTS.forEach(e=>{if(BELLS.some(b=>b[0]===sv[e.k]))userSet[e.k]=sv[e.k];});
 }catch(e){}
-
 EVENTS.forEach(e=>{bellCfg[e.k]=userSet[e.k]||DEFAULT_BELL;});
-
-function saveBells(){
-  try{localStorage.setItem("tt-bells2",JSON.stringify(userSet))}catch(e){}
-}
-
+function saveBells(){try{localStorage.setItem("tt-bells2",JSON.stringify(userSet))}catch(e){}}
 const bellName=id=>(BELLS.find(b=>b[0]===id)||BELLS[0])[1];
-
 function ringSynth(kind,style="m0"){
   const AC=window.AudioContext||window.webkitAudioContext;
   audioCtx=audioCtx||new AC();
   if(audioCtx.state==="suspended")audioCtx.resume();
-
-  const ac=audioCtx,t0=ac.currentTime+0.03;
-
+  const ac=audioCtx, t0=ac.currentTime+0.03;
   const hit=(t,f,vol,dec)=>[1,2.4,3.9,5.9].forEach((m,i)=>{
     const o=ac.createOscillator(),g=ac.createGain();
-    o.type="sine";o.frequency.value=f*m;
-    o.connect(g);g.connect(ac.destination);
+    o.type="sine";o.frequency.value=f*m;o.connect(g);g.connect(ac.destination);
     g.gain.setValueAtTime(0.0001,t);
     g.gain.exponentialRampToValueAtTime(vol/(i+1),t+0.005);
     g.gain.exponentialRampToValueAtTime(0.0001,t+dec);
     o.start(t);o.stop(t+dec+0.02);
   });
-
   const tone=(t,f,dec,vol,parts)=>parts.forEach(([m,a])=>{
     const o=ac.createOscillator(),g=ac.createGain();
-    o.type="sine";o.frequency.value=f*m;
-    o.connect(g);g.connect(ac.destination);
+    o.type="sine";o.frequency.value=f*m;o.connect(g);g.connect(ac.destination);
     g.gain.setValueAtTime(0.0001,t);
     g.gain.exponentialRampToValueAtTime(vol*a,t+0.012);
     g.gain.exponentialRampToValueAtTime(0.0001,t+dec);
     o.start(t);o.stop(t+dec+0.05);
   });
-
   const semi=n=>261.63*Math.pow(2,n/12);
   const CH=[[1,1],[2,0.45],[3,0.2],[4.2,0.1]];
   const mel=MELODIES.find(x=>x.id===style);
-
-  if(kind!=="ding"&&mel){
-    (kind==="pre"?mel.notes.slice(0,mel.pre):mel.notes).forEach((n,i)=>{
-      if(n!==null)tone(t0+i*mel.step,semi(n),mel.dec,0.3,CH);
-    });
+  if(kind!=="ding"&&mel){                       // 旋律钟声
+    (kind==="pre"?mel.notes.slice(0,mel.pre):mel.notes).forEach((n,i)=>{if(n!==null)tone(t0+i*mel.step,semi(n),mel.dec,0.3,CH);});
     return;
   }
-
-  if(kind!=="ding"&&style==="beep"){
+  if(kind!=="ding"&&style==="beep"){            // 最初的提示音：两声“叮—咚”
     const n=kind==="pre"?1:2;
     for(let r=0;r<n;r++)[0,0.22].forEach((dt,j)=>{
       const o=ac.createOscillator(),g=ac.createGain(),T=t0+r*0.8+dt;
-      o.frequency.value=j?1040:784;
-      o.connect(g);g.connect(ac.destination);
+      o.frequency.value=j?1040:784;o.connect(g);g.connect(ac.destination);
       g.gain.setValueAtTime(0.0001,T);
       g.gain.exponentialRampToValueAtTime(0.25,T+0.02);
       g.gain.exponentialRampToValueAtTime(0.0001,T+0.2);
@@ -526,366 +336,171 @@ function ringSynth(kind,style="m0"){
     });
     return;
   }
-
-  if(kind!=="ding"&&style==="gong"){
+  if(kind!=="ding"&&style==="gong"){        // 铜钟：低沉的“咚——”
     const n=kind==="pre"?2:3;
-    for(let i=0;i<n;i++)
-      tone(t0+i*1.7,130.81,3.2,0.38,[[1,1],[2.76,0.5],[5.4,0.28],[8.93,0.12]]);
+    for(let i=0;i<n;i++)tone(t0+i*1.7,130.81,3.2,0.38,[[1,1],[2.76,0.5],[5.4,0.28],[8.93,0.12]]);
     return;
   }
-
-  if(kind!=="ding"&&style==="wind"){
-    const P=[12,14,16,19,21,24,26,28],n=kind==="pre"?6:14;
-    for(let i=0;i<n;i++)
-      tone(t0+i*0.13+Math.random()*0.05,semi(P[Math.floor(Math.random()*P.length)]),1.6,0.16,CH);
+  if(kind!=="ding"&&style==="wind"){        // 风铃：高音的随机叮叮声
+    const P=[12,14,16,19,21,24,26,28], n=kind==="pre"?6:14;
+    for(let i=0;i<n;i++)tone(t0+i*0.13+Math.random()*0.05,semi(P[Math.floor(Math.random()*P.length)]),1.6,0.16,CH);
     return;
   }
-
-  const burst=(start,n,f,vol)=>{
-    for(let i=0;i<n;i++)hit(start+i*0.085,f,vol,0.2);
-  };
-
-  if(kind==="ding")hit(t0,1000,0.2,0.8);
-  else if(kind==="pre"){
-    burst(t0,9,1250,0.09);
-    burst(t0+1.05,9,1250,0.09);
-  }else{
-    burst(t0,12,1450,0.1);
-    burst(t0+1.3,12,1450,0.1);
-    burst(t0+2.6,12,1450,0.1);
-  }
+  const burst=(start,n,f,vol)=>{for(let i=0;i<n;i++)hit(start+i*0.085,f,vol,0.2);};
+  if(kind==="ding"){hit(t0,1000,0.2,0.8);}
+  else if(kind==="pre"){burst(t0,9,1250,0.09);burst(t0+1.05,9,1250,0.09);}      // 预备铃：叮铃铃 ×2
+  else{burst(t0,12,1450,0.1);burst(t0+1.3,12,1450,0.1);burst(t0+2.6,12,1450,0.1);} // 上课/下课铃：叮铃铃 ×3
 }
-
 function beep(kind="ding",style="m0"){
   try{
     if(style==="off")return;
     ringSynth(kind,style);
   }catch(e){}
 }
-
-function playEvent(k){
-  const ev=EVENTS.find(e=>e.k===k);
-  if(ev)beep(ev.kind,bellCfg[k]);
-}
-
+function playEvent(k){const ev=EVENTS.find(e=>e.k===k);if(ev)beep(ev.kind,bellCfg[k]);}
 function msgFor(di,p,n){
   const pn=p.t==="c"?itemName(di,p):p.name;
-
-  if(!n)return [
-    "放学啦",
-    `${pn}结束了，放学啦！${di===4?"周末愉快～":"明天见～"}`,
-    "dismiss"
-  ];
-
+  if(!n)return ["放学啦",`${pn}结束了，放学啦！${di===4?"周末愉快～":"明天见～"}`,"dismiss"];
   const nn=(n.t==="c"?itemName(di,n):n.name)+`，${fmtT(n.s)}–${fmtT(n.e)}`;
   const ev=p.t==="b"?"start":(n.t==="b"?"end":"switch");
-
-  return [
-    {start:"上课啦",end:"下课啦",switch:"换节啦"}[ev],
-    `${pn}结束了，接下来是${nn}`,
-    ev
-  ];
+  return [{start:"上课啦",end:"下课啦",switch:"换节啦"}[ev],`${pn}结束了，接下来是${nn}`,ev];
 }
-
 function notify(title,body,ev){
-  toast(title,body);
-  if(ev)playEvent(ev);
-  try{navigator.vibrate&&navigator.vibrate([200,100,200])}catch(e){}
+  toast(title,body);if(ev)playEvent(ev);
+  try{navigator.vibrate&&navigator.vibrate([200,100,200]);}catch(e){}
   showSys(title,body);
 }
-
+// 系统通知：优先走 Service Worker，这样切到其他标签页也能弹出
 async function showSys(title,body){
   if(!("Notification" in window)||Notification.permission!=="granted")return;
-
   try{
     if("serviceWorker" in navigator){
-      const reg=await Promise.race([
-        navigator.serviceWorker.ready,
-        new Promise(r=>setTimeout(()=>r(null),2000))
-      ]);
-      if(reg){
-        await reg.showNotification(title,{
-          body,tag:"timetable",renotify:true,vibrate:[200,100,200]
-        });
-        return;
-      }
+      const reg=await Promise.race([navigator.serviceWorker.ready,new Promise(r=>setTimeout(()=>r(null),2000))]);
+      if(reg){await reg.showNotification(title,{body,tag:"timetable",renotify:true,vibrate:[200,100,200]});return;}
     }
   }catch(e){}
-
-  try{new Notification(title,{body,tag:"timetable"})}catch(e){}
+  try{new Notification(title,{body,tag:"timetable"});}catch(e){}
 }
-
-try{
-  if("serviceWorker" in navigator)
-    navigator.serviceWorker.register("sw.js").catch(()=>{});
-}catch(e){}
-
+try{if("serviceWorker" in navigator)navigator.serviceWorker.register("sw.js").catch(()=>{});}catch(e){}
 btnNotify.onclick=async()=>{
   notifyOn=!notifyOn;
   try{localStorage.setItem("tt-notify",notifyOn?"1":"0")}catch(e){}
   setNotifyBtn();
-
   if(notifyOn){
-    beep();
-
-    if("Notification" in window&&Notification.permission==="default"){
-      try{await Notification.requestPermission()}catch(e){}
-    }
-
-    if(!("Notification" in window)||Notification.permission!=="granted")
-      toast("已开启页内提醒","浏览器没有授权系统通知，所以只会在页面里弹窗并响铃。页面需要保持打开。");
-    else
-      toast("已开启通知","每次换节、下课、上课、放学都会提醒你。页面需要保持打开。");
+    beep(); // 在点击时解锁声音
+    if("Notification" in window&&Notification.permission==="default"){try{await Notification.requestPermission();}catch(e){}}
+    if(!("Notification" in window)||Notification.permission!=="granted")toast("已开启页内提醒","浏览器没有授权系统通知，所以只会在页面里弹窗并响铃。页面需要保持打开。");
+    else toast("已开启通知","每次换节、下课、上课、放学都会提醒你。页面需要保持打开。");
   }
 };
-
 document.getElementById("btnTest").onclick=async()=>{
   const has="Notification" in window;
-
-  if(has&&Notification.permission==="default"){
-    try{await Notification.requestPermission()}catch(e){}
+  if(has&&Notification.permission==="default"){try{await Notification.requestPermission();}catch(e){}}
+  {
+    const nw=now(), d0=nw.di>=0?nw.di:0, list=items(d0);
+    let k=list.findIndex(x=>nw.m>=x.s&&nw.m<x.e);
+    if(k<0)k=list.findIndex(x=>x.s>nw.m);
+    if(k<0)k=list.length-1;
+    const [t,m2,ev]=msgFor(d0,list[k],list[k+1]||null);
+    notify("测试："+t,(nw.di<0?"（今天休息，用星期一举例）":"")+m2,ev);
   }
-
-  const nw=now(),d0=nw.di>=0?nw.di:0,list=items(d0);
-  let k=list.findIndex(x=>nw.m>=x.s&&nw.m<x.e);
-  if(k<0)k=list.findIndex(x=>x.s>nw.m);
-  if(k<0)k=list.length-1;
-
-  const [t,m2,ev]=msgFor(d0,list[k],list[k+1]||null);
-  notify("测试："+t,(nw.di<0?"（今天休息，用星期一举例）":"")+m2,ev);
-
   let tip="";
-  if(location.protocol==="file:")
-    tip="现在是本地文件打开的，系统通知可能无法正常工作。建议使用 HTTPS 网站打开。";
-  else if(!has)
-    tip="这个浏览器不支持系统通知，只会有页面弹窗和提示音。";
-  else if(Notification.permission==="denied")
-    tip="通知被浏览器拦截了。点地址栏左边的图标 → 网站设置 → 通知 → 允许，然后刷新页面再试。";
-  else if(Notification.permission!=="granted")
-    tip="还没有授权通知，请在浏览器弹窗里点“允许”后再试一次。";
-
+  if(location.protocol==="file:")tip="现在是本地文件打开的，系统通知不会生效。请用 https://用户名.github.io/... 的网址打开。";
+  else if(!has)tip="这个浏览器不支持系统通知，只会有页面弹窗和提示音。";
+  else if(Notification.permission==="denied")tip="通知被浏览器拦截了。点地址栏左边的图标 → 网站设置 → 通知 → 允许，然后刷新页面再试。";
+  else if(Notification.permission!=="granted")tip="还没有授权通知，请在浏览器弹窗里点“允许”后再试一次。";
   if(tip)setTimeout(()=>toast("没有收到系统通知？",tip),1800);
 };
-
 // ===== 铃声设置面板 =====
-const bellTable=document.getElementById("bellTable");
-const bellAll=document.getElementById("bellAll");
-
+const bellTable=document.getElementById("bellTable"), bellAll=document.getElementById("bellAll");
 function buildBellPanel(){
-  const opts=id=>BELLS.map(b=>
-    `<option value="${b[0]}"${b[0]===id?" selected":""}>${b[1]}</option>`
-  ).join("");
-
-  bellTable.innerHTML=
-    "<thead><tr><th>事件</th><th>铃声</th><th></th></tr></thead><tbody>"+
-    EVENTS.map(e=>
-      `<tr><td><b>${e.label}</b><small>${e.desc}</small></td><td><select data-k="${e.k}" aria-label="${e.label}的铃声">${opts(bellCfg[e.k])}</select></td><td><button data-t="${e.k}">试听</button></td></tr>`
-    ).join("")+"</tbody>";
-
-  bellAll.innerHTML='<option value="">选择…</option>'+
-    BELLS.map(b=>`<option value="${b[0]}">${b[1]}</option>`).join("");
+  const opts=id=>BELLS.map(b=>`<option value="${b[0]}"${b[0]===id?" selected":""}>${b[1]}</option>`).join("");
+  bellTable.innerHTML="<thead><tr><th>事件</th><th>铃声</th><th></th></tr></thead><tbody>"+
+    EVENTS.map(e=>`<tr><td><b>${e.label}</b><small>${e.desc}</small></td><td><select data-k="${e.k}" aria-label="${e.label}的铃声">${opts(bellCfg[e.k])}</select></td><td><button data-t="${e.k}">试听</button></td></tr>`).join("")+"</tbody>";
+  bellAll.innerHTML='<option value="">选择…</option>'+BELLS.map(b=>`<option value="${b[0]}">${b[1]}</option>`).join("");
 }
-
 function previewEvent(k){
   const ev=EVENTS.find(e=>e.k===k);
-  toast("现在是"+ev.label,"铃声："+bellName(bellCfg[k])+
-    (bellCfg[k]!=="off"&&ev.kind==="pre"?"（短版）":""));
+  toast("现在是"+ev.label,"铃声："+bellName(bellCfg[k])+(bellCfg[k]!=="off"&&ev.kind==="pre"?"（短版）":""));
   playEvent(k);
 }
-
-bellTable.onchange=e=>{
-  const k=e.target.dataset&&e.target.dataset.k;
-  if(k){
-    bellCfg[k]=e.target.value;
-    userSet[k]=e.target.value;
-    saveBells();
-  }
-};
-
-bellTable.onclick=e=>{
-  const k=e.target.dataset&&e.target.dataset.t;
-  if(k)previewEvent(k);
-};
-
+bellTable.onchange=e=>{const k=e.target.dataset&&e.target.dataset.k;if(k){bellCfg[k]=e.target.value;userSet[k]=e.target.value;saveBells();}};
+bellTable.onclick=e=>{const k=e.target.dataset&&e.target.dataset.t;if(k)previewEvent(k);};
 bellAll.onchange=()=>{
-  const v=bellAll.value;
-  if(!v)return;
-
-  EVENTS.forEach(e=>{
-    bellCfg[e.k]=v;
-    userSet[e.k]=v;
-  });
-
-  saveBells();
-  buildBellPanel();
+  const v=bellAll.value;if(!v)return;
+  EVENTS.forEach(e=>{bellCfg[e.k]=v;userSet[e.k]=v;});saveBells();buildBellPanel();
   toast("已统一设置","所有事件都使用："+bellName(v));
 };
-
 buildBellPanel();
-
 const btnBellCollapse=document.getElementById("btnBellCollapse");
 const bellContent=document.getElementById("bellContent");
-
 btnBellCollapse.onclick=()=>{
   const collapsed=btnBellCollapse.getAttribute("aria-expanded")==="true";
   btnBellCollapse.setAttribute("aria-expanded",String(!collapsed));
   bellContent.hidden=collapsed;
   btnBellCollapse.textContent=collapsed?"展开 ▼":"收起 ▲";
 };
-
 setNotifyBtn();
 
 let prev={key:null,it:null,di:-1};
 let lastSec=null,lastDi=-2;
 let lastKey="";
-
 function tick(){
-  const d=new Date(),w=d.getDay();
-  const sec=d.getHours()*3600+d.getMinutes()*60+d.getSeconds();
-
-  document.getElementById("clock").textContent=
-    `${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
-
-  document.getElementById("date").textContent=
-    `${d.getMonth()+1}月${d.getDate()}日 星期${"日一二三四五六"[w]}`;
-
-  const di=w>=1&&w<=5?w-1:-1;
-  const first=toMin(periods[0][0])*60;
-
+  const d=new Date(), w=d.getDay(), sec=d.getHours()*3600+d.getMinutes()*60+d.getSeconds();
+  document.getElementById("clock").textContent=`${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
+  document.getElementById("date").textContent=`${d.getMonth()+1}月${d.getDate()}日 星期${"日一二三四五六"[w]}`;
+  const di=w>=1&&w<=5?w-1:-1, first=toMin(periods[0][0])*60;
   let cur="-",curSub="",nxt="-",nxtSub="",cu=null;
-
   if(di<0){
     cur="今天休息";
-    nxt="星期一 "+nm(0,0);
-    nxtSub="还有 "+fmt((w===6?2:1)*86400-sec+first);
+    nxt="星期一 "+nm(0,0); nxtSub="还有 "+fmt((w===6?2:1)*86400-sec+first);
   }else{
     const it=items(di);
     cu=it.find(x=>sec>=x.s*60&&sec<x.e*60);
     const nx=it.find(x=>x.t==="c"&&x.s*60>sec);
-
     if(cu){
-      cur=cu.t==="c"?itemName(di,cu):cu.name;
-      curSub="还剩 "+fmt(cu.e*60-sec);
-    }else{
-      cur=sec<first?"还没上课":"今天的课已结束";
-    }
-
-    if(nx){
-      nxt=itemName(di,nx);
-      nxtSub="还有 "+fmt(nx.s*60-sec);
-    }else{
-      const nd=(di+1)%5,add=di===4?3:1;
-      nxt=days[nd]+" "+nm(nd,0);
-      nxtSub="还有 "+fmt(add*86400-sec+first);
+      cur=cu.t==="c"?itemName(di,cu):cu.name; curSub="还剩 "+fmt(cu.e*60-sec);
+    }else cur=sec<first?"还没上课":"今天的课已结束";
+    if(nx){nxt=itemName(di,nx);nxtSub="还有 "+fmt(nx.s*60-sec);}
+    else{
+      const nd=(di+1)%5, add=di===4?3:1;
+      nxt=days[nd]+" "+nm(nd,0); nxtSub="还有 "+fmt(add*86400-sec+first);
     }
   }
-
-  cur_.textContent=cur;
-  curSub_.textContent=curSub;
-  nxt_.textContent=nxt;
-  nxtSub_.textContent=nxtSub;
-
+  cur_.textContent=cur;curSub_.textContent=curSub;nxt_.textContent=nxt;nxtSub_.textContent=nxtSub;
   // 状态切换提醒
-  const ck=di<0?"off":
-    (cu?di+":"+cu.t+":"+(cu.t==="c"?cu.i:cu.k):(sec<first?"pre":"post"));
-
-  if(notifyOn&&prev.key!==null&&ck!==prev.key&&prev.it&&prev.di===di&&
-     sec-prev.it.e*60>=0&&sec-prev.it.e*60<180){
-    if(cu||ck==="post"){
-      const [t,m2,ev]=msgFor(di,prev.it,cu);
-      notify(t,m2,ev);
-    }
+  const ck=di<0?"off":(cu?di+":"+cu.t+":"+(cu.t==="c"?cu.i:cu.k):(sec<first?"pre":"post"));
+  if(notifyOn&&prev.key!==null&&ck!==prev.key&&prev.it&&prev.di===di&&sec-prev.it.e*60>=0&&sec-prev.it.e*60<180){
+    if(cu||ck==="post"){const [t,m2,ev]=msgFor(di,prev.it,cu);notify(t,m2,ev);}
   }
-
-  // 原有预备铃：每个下课结束前3分钟、放学前3分钟
+  // 预备铃：每个下课结束前3分钟、放学前3分钟
   if(notifyOn&&lastSec!==null&&lastDi===di&&di>=0){
     const it2=items(di);
-
     it2.forEach((x,idx)=>{
-      const isBreak=x.t==="b";
-      const isLast=idx===it2.length-1;
-      const T=x.e*60-180;
-
+      const isBreak=x.t==="b", isLast=idx===it2.length-1, T=x.e*60-180;
       if(!(isBreak||isLast))return;
-
       if(lastSec<T&&sec>=T&&sec-T<180){
-        if(isBreak){
-          const n=it2[idx+1];
-          notify(
-            "预备铃",
-            `${x.name}还有3分钟结束，接下来是${itemName(di,n)}，${fmtT(n.s)}–${fmtT(n.e)}`,
-            "preBreak"
-          );
-        }else{
-          notify(
-            "预备铃",
-            `${itemName(di,x)}还有3分钟结束，3分钟后放学啦！`,
-            "preDismiss"
-          );
-        }
+        if(isBreak){const n=it2[idx+1];notify("预备铃",`${x.name}还有3分钟结束，接下来是${itemName(di,n)}，${fmtT(n.s)}–${fmtT(n.e)}`,"preBreak");}
+        else notify("预备铃",`${itemName(di,x)}还有3分钟结束，3分钟后放学啦！`,"preDismiss");
       }
     });
   }
-
-  // ===== 新增固定时间预备铃：08:45 和 12:00 =====
-  // 使用「预备铃（下课）」当前设置的铃声。
-  // 只在星期一至星期五、通知开启时触发。
-  if(notifyOn&&lastSec!==null&&lastDi===di&&di>=0){
-    const fixedPrebells=[
-      {time:"08:45",label:"08:45 预备铃"},
-      {time:"12:00",label:"12:00 预备铃"}
-    ];
-
-    fixedPrebells.forEach(bell=>{
-      const target=toMin(bell.time)*60;
-
-      if(lastSec<target&&sec>=target&&sec-target<180){
-        notify(
-          bell.label,
-          `现在是 ${bell.time}，请做好准备！`,
-          "preBreak"
-        );
-      }
-    });
-  }
-
-  lastSec=sec;
-  lastDi=di;
+  lastSec=sec;lastDi=di;
   prev={key:ck,it:cu,di};
-
   const key=di+"-"+cur;
-  if(key!==lastKey){
-    lastKey=key;
-    render();
-  }
+  if(key!==lastKey){lastKey=key;render();}
 }
-
-const cur_=document.getElementById("cur");
-const curSub_=document.getElementById("curSub");
-const nxt_=document.getElementById("nxt");
-const nxtSub_=document.getElementById("nxtSub");
-
-// 用 Web Worker 计时
+const cur_=document.getElementById("cur"),curSub_=document.getElementById("curSub"),
+      nxt_=document.getElementById("nxt"),nxtSub_=document.getElementById("nxtSub");
+// 用 Web Worker 计时：切到别的标签页时不会被浏览器降频，通知更准时
 function startClock(){
   try{
-    const w=new Worker(URL.createObjectURL(
-      new Blob(["setInterval(()=>postMessage(1),1000)"],{type:"text/javascript"})
-    ));
+    const w=new Worker(URL.createObjectURL(new Blob(["setInterval(()=>postMessage(1),1000)"],{type:"text/javascript"})));
     w.onmessage=tick;
-  }catch(e){
-    setInterval(tick,1000);
-  }
-
-  if(document.addEventListener){
-    document.addEventListener("visibilitychange",()=>{
-      if(!document.hidden)tick();
-    });
-  }
+  }catch(e){setInterval(tick,1000);}
+  if(document.addEventListener)document.addEventListener("visibilitychange",()=>{if(!document.hidden)tick()});
 }
-
-render();
-tick();
-startClock();
+render(); tick(); startClock();
 </script>
 </body>
 </html>
